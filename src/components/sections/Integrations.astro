@@ -1,0 +1,22 @@
+---
+import { integrations, site } from '../../data/site';
+
+const half = Math.ceil(integrations.length / 2);
+const rows = [integrations.slice(0, half), integrations.slice(half)];
+---
+
+<section class="container-x flex flex-col items-center gap-12 py-24 text-center lg:gap-14 lg:py-36" aria-labelledby="integrations-title">
+  <h2 id="integrations-title" class="text-h1 max-w-[20ch]" data-split>Your tools. Your process. One automated workflow.</h2>
+
+  <div class="flex w-full max-w-[920px] flex-col items-center" data-integrations>
+    <ul class="flex w-full flex-wrap justify-center gap-2.5 sm:grid sm:grid-cols-5 sm:gap-4" data-reveal-stagger>
+      {rows[0].map((tool) => <li class="rounded-[4px] border border-line px-4 py-3 text-[0.9375rem]">{tool}</li>)}
+    </ul>
+    <span class="h-12 w-px origin-top bg-ink" aria-hidden="true" data-line></span>
+    <p class="rounded-[4px] bg-lavender-grey px-10 py-5 font-serif text-[2rem] tracking-[-0.03em]">{site.name}</p>
+    <span class="h-12 w-px origin-top bg-ink" aria-hidden="true" data-line></span>
+    <ul class="flex w-full flex-wrap justify-center gap-2.5 sm:grid sm:grid-cols-5 sm:gap-4" data-reveal-stagger>
+      {rows[1].map((tool) => <li class="rounded-[4px] border border-line px-4 py-3 text-[0.9375rem]">{tool}</li>)}
+    </ul>
+  </div>
+</section>

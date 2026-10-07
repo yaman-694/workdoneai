@@ -1,0 +1,15 @@
+---
+import { cta } from '../data/site';
+import Icon from './ui/Icon.astro';
+---
+
+<!-- Thumb-reach CTA on phones; shown after the hero, hidden near the contact form. -->
+<div
+  class="pointer-events-none fixed inset-x-0 bottom-0 z-40 translate-y-full px-4 pb-[max(1rem,env(safe-area-inset-bottom))] opacity-0 transition-[translate,opacity] duration-300 data-visible:pointer-events-auto data-visible:translate-y-0 data-visible:opacity-100 lg:hidden"
+  data-mobile-cta
+>
+  <a href="/#contact" class="btn btn-primary w-full text-base shadow-[0_8px_24px_rgba(23,23,23,0.2)]">
+    {cta.primary}
+    <Icon name="arrow-right" size={18} />
+  </a>
+</div>

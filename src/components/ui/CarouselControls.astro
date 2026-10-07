@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  /** What the carousel holds, for button labels. */
+  label: string;
+  /** Use light buttons on dark backgrounds. */
+  light?: boolean;
+}
+
+const { label, light = false } = Astro.props;
+const tone = light ? 'border-white text-white hover:bg-white hover:text-text' : 'border-text hover:bg-text hover:text-white';
+const solid = light ? 'border-white bg-white text-text hover:bg-lavender' : 'border-text bg-text text-white hover:bg-ink';
+---
+
+<div class="hidden gap-2 sm:flex">
+  <button type="button" class:list={['icon-btn', tone]} aria-label={`Previous ${label}`} data-carousel-prev>
+    <Icon name="arrow-left" />
+  </button>
+  <button type="button" class:list={['icon-btn', solid]} aria-label={`Next ${label}`} data-carousel-next>
+    <Icon name="arrow-right" />
+  </button>
+</div>

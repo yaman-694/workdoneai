@@ -1,0 +1,77 @@
+---
+import { beforeAfter } from '../../data/site';
+
+const { before, after, beforeTotal, afterTotal, enquiriesPerMonth, manualHours, automatedHours, savedHours } = beforeAfter;
+const automatedShare = Math.max((automatedHours / manualHours) * 100, 1.5);
+---
+
+<section class="bg-lavender-light py-24 lg:py-36" aria-labelledby="before-after-title">
+  <div class="container-x flex flex-col gap-12 lg:gap-16">
+    <h2 id="before-after-title" class="text-h1 max-w-[18ch]" data-split>From manual work to automated flow</h2>
+
+    <div class="grid items-stretch gap-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
+      <div class="flex flex-col border border-almond bg-almond-tint p-6 lg:p-9" data-reveal>
+        <div class="flex justify-between pb-2"><p class="eyebrow">Before</p><p class="eyebrow">Time</p></div>
+        <ol>
+          {
+            before.map((step) => (
+              <li class="flex justify-between gap-4 border-b border-almond py-2.5">
+                <span>{step.label}</span>
+                <span class="text-almond-ink tabular-nums">{step.time}</span>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="flex items-baseline justify-between pt-4">
+          <span class="font-semibold">Total per enquiry</span>
+          <span class="font-serif text-[2rem] text-almond-ink">{beforeTotal}</span>
+        </div>
+      </div>
+
+      <p class="text-h2 self-center py-2 text-center font-serif" data-reveal>
+        Less Work.<br /><span class="text-ink">More Flow.</span>
+      </p>
+
+      <div class="flex flex-col border border-line bg-white p-6 lg:p-9" data-reveal>
+        <div class="flex justify-between pb-2"><p class="eyebrow">After</p><p class="eyebrow">Time</p></div>
+        <ol>
+          {
+            after.map((step) => (
+              <li class="flex justify-between gap-4 border-b border-line py-2.5">
+                <span>{step.label}</span>
+                <span class="text-ink tabular-nums">{step.time}</span>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="flex items-baseline justify-between pt-4">
+          <span class="font-semibold">Total per enquiry</span>
+          <span class="font-serif text-[2rem] text-ink">{afterTotal}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-7 border border-line bg-white p-6 lg:p-12" data-time-saved>
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <p class="text-h1 font-serif">
+          <span data-count={savedHours} data-suffix=" hrs">{savedHours} hrs</span>
+          <span class="text-ink">saved every month</span>
+        </p>
+        <p class="max-w-[21rem] text-[0.9375rem] text-muted">At {enquiriesPerMonth} enquiries a month.</p>
+      </div>
+      <div class="flex flex-col gap-3.5">
+        <div class="grid grid-cols-[5.5rem_1fr_4.5rem] items-center gap-3 sm:gap-4">
+          <span class="text-sm">Manual</span>
+          <div class="h-6 bg-almond-tint lg:h-7"><div class="h-full w-full origin-left bg-almond" data-bar></div></div>
+          <span class="text-right tabular-nums">{manualHours} hrs</span>
+        </div>
+        <div class="grid grid-cols-[5.5rem_1fr_4.5rem] items-center gap-3 sm:gap-4">
+          <span class="text-sm">Automated</span>
+          <div class="h-6 lg:h-7"><div class="h-full origin-left bg-ink" style={`width:${automatedShare}%`} data-bar></div></div>
+          <span class="text-right tabular-nums">~{automatedHours} hrs</span>
+        </div>
+      </div>
+      <p class="text-xs text-muted">Example timings. Replace with real measurements from client projects before launch.</p>
+    </div>
+  </div>
+</section>

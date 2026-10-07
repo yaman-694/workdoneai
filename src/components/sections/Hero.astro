@@ -1,0 +1,65 @@
+---
+import { cta, heroStats } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+import ImageSlot from '../ui/ImageSlot.astro';
+
+const hasExamples = heroStats.some((stat) => stat.example);
+---
+
+<section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-plum text-white">
+  <div class="absolute inset-0 -z-10" data-hero-media>
+    <ImageSlot
+      label="Business owner relaxed at the front desk while enquiries are handled automatically"
+      eager
+      labelClass="top-24 hidden sm:block"
+    />
+  </div>
+  <div
+    class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(23,23,23,0.35)_0%,rgba(23,23,23,0.2)_35%,rgba(23,23,23,0.8)_100%)] lg:bg-[linear-gradient(90deg,rgba(23,23,23,0.75)_0%,rgba(23,23,23,0.35)_60%,rgba(23,23,23,0.15)_100%)]"
+  >
+  </div>
+
+  <div class="container-x flex flex-col gap-7 pt-32 pb-8 lg:gap-9 lg:pt-44 lg:pb-12">
+    <p class="eyebrow text-lavender-light" data-reveal>Leads · Bookings · Follow-ups · CRM · AI Agents</p>
+    <h1 class="text-display max-w-[14ch]" data-split>
+      Your Business, <span class="block text-lavender">On Autopilot.</span>
+    </h1>
+    <div class="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+      <p class="text-lead max-w-[34rem] text-white/90" data-reveal>
+        We design and build custom automations that eliminate repetitive work from your business.
+      </p>
+      <div class="flex flex-col gap-3 sm:flex-row" data-reveal>
+        <a href="#contact" class="btn btn-primary">
+          {cta.primary}
+          <Icon name="arrow-right" size={18} />
+        </a>
+        <a href="#how-it-works" class="btn btn-outline-light">
+          {cta.secondary}
+          <Icon name="arrow-down" size={18} />
+        </a>
+      </div>
+    </div>
+
+    <dl class="mt-4 grid grid-cols-2 border-t border-white/35 lg:mt-8 lg:grid-cols-4" data-reveal-stagger>
+      {
+        heroStats.map((stat) => (
+          <div class="flex flex-col gap-2 pt-5 pr-4 lg:pt-7">
+            <dt class="order-2 max-w-[17rem] text-[0.8125rem] leading-snug text-lavender-light lg:text-[0.9375rem]">
+              {stat.label}
+              {stat.example && <span aria-hidden="true">*</span>}
+            </dt>
+            <dd
+              class="order-1 font-serif text-[2rem] leading-none tracking-[-0.03em] lg:text-[3.25rem]"
+              data-count={stat.count}
+              data-prefix={stat.prefix}
+              data-suffix={stat.suffix}
+            >
+              {stat.value}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+    {hasExamples && <p class="text-xs text-lavender/90">* Example figures. Replace with real client results before launch.</p>}
+  </div>
+</section>

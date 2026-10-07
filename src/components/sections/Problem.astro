@@ -1,0 +1,33 @@
+---
+import { manualTasks, site } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+---
+
+<section class="container-x py-24 lg:py-36" aria-labelledby="problem-title">
+  <h2 id="problem-title" class="text-h1 max-w-[16ch]" data-split>Stop doing work your system can do.</h2>
+
+  <ul class="mt-12 lg:mt-16" data-strike-list>
+    {
+      manualTasks.map((task) => (
+        <li class="flex items-baseline justify-between gap-6 border-t border-text py-4 lg:py-6">
+          <span class="relative font-serif text-[1.5rem] leading-tight tracking-[-0.02em] lg:text-[2.5rem]">
+            {task}
+            <span
+              class="absolute top-[48%] left-0 h-[3px] w-full origin-left bg-almond lg:h-1"
+              aria-hidden="true"
+              data-strike></span>
+          </span>
+          <Icon name="x" size={28} class="shrink-0 text-almond-ink" />
+        </li>
+      ))
+    }
+  </ul>
+  <div class="border-t border-text"></div>
+
+  <div class="mt-14 flex flex-col items-center gap-4 text-center lg:mt-20" data-reveal>
+    <Icon name="arrow-down" size={28} class="text-ink" />
+    <p class="eyebrow text-text">{site.name}</p>
+    <Icon name="arrow-down" size={28} class="text-ink" />
+    <p class="text-h2 font-serif text-ink">Automatically handled.</p>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+import { cta } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+---
+
+<section class="bg-lavender py-28 lg:py-40" aria-labelledby="final-cta-title">
+  <div class="container-x flex flex-col gap-10">
+    <h2 id="final-cta-title" class="text-display max-w-[16ch]" data-split>
+      Less manual work. <span class="text-ink">More time for what matters.</span>
+    </h2>
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <p class="text-lead max-w-[32rem]" data-reveal>Tell us what your team does manually. We'll show you what can be automated.</p>
+      <a href="#contact" class="btn btn-dark w-full sm:w-auto sm:self-start lg:self-auto" data-reveal>
+        {cta.primary}
+        <Icon name="arrow-right" size={18} />
+      </a>
+    </div>
+  </div>
+</section>

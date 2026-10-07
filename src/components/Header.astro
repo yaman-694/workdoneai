@@ -1,0 +1,95 @@
+---
+import { cta, nav, site } from '../data/site';
+import Icon from './ui/Icon.astro';
+
+interface Props {
+  /** Transparent with white text until the page scrolls (for pages that open on a dark hero). */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+---
+
+<header
+  class="group fixed inset-x-0 top-0 z-50 text-white transition-[background-color,color,border-color,height] duration-300 data-solid:border-b data-solid:border-text/15 data-solid:bg-white/85 data-solid:text-text data-solid:backdrop-blur-md"
+  data-header
+  data-overlay={overlay ? '' : undefined}
+  data-solid={overlay ? undefined : ''}
+>
+  <div class="container-x flex h-[72px] items-center justify-between gap-6 transition-[height] duration-300 lg:h-20 lg:group-data-scrolled:h-16">
+    <a href="/" class="font-serif text-[1.625rem] tracking-[-0.03em]" aria-label={`${site.name} home`}>{site.name}</a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex gap-10 font-serif text-lg">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="underline-offset-4 hover:underline">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="/#contact"
+        class="btn hidden border-current text-current hover:bg-text hover:text-white group-data-solid:hover:border-text sm:inline-flex"
+      >
+        {cta.nav}
+      </a>
+      <button
+        type="button"
+        class="inline-flex size-12 items-center justify-center lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Open menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[60] flex flex-col bg-white text-text lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+  hidden
+  data-menu
+>
+  <div class="container-x flex h-[72px] items-center justify-between">
+    <span class="font-serif text-[1.625rem] tracking-[-0.03em]">{site.name}</span>
+    <button
+      type="button"
+      class="inline-flex size-12 items-center justify-center"
+      aria-label="Close menu"
+      data-menu-close
+    >
+      <Icon name="close" size={26} />
+    </button>
+  </div>
+  <nav aria-label="Mobile" class="container-x flex flex-1 flex-col justify-between pt-6 pb-8">
+    <ul class="flex flex-col">
+      {
+        nav.map((item) => (
+          <li class="border-t border-text/15 last:border-b">
+            <a href={item.href} class="flex items-center justify-between py-5 font-serif text-[2.5rem] leading-none tracking-[-0.03em]" data-menu-link>
+              {item.label}
+              <Icon name="arrow-right" size={24} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href="/#contact" class="btn btn-primary w-full text-base" data-menu-link>
+      {cta.primary}
+      <Icon name="arrow-right" size={18} />
+    </a>
+  </nav>
+</div>

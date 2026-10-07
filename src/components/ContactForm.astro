@@ -1,0 +1,49 @@
+---
+import Icon from './ui/Icon.astro';
+
+const fields = [
+  { name: 'name', label: 'Name', autocomplete: 'name' },
+  { name: 'business', label: 'Business name', autocomplete: 'organization' },
+  { name: 'contact', label: 'Email / WhatsApp', autocomplete: 'email' },
+  { name: 'about', label: 'What does your business do?', autocomplete: 'off' },
+] as const;
+
+const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
+---
+
+<form class="flex flex-col gap-5" action={endpoint || undefined} method="post" novalidate data-contact-form data-endpoint={endpoint}>
+  <p class="font-serif text-h4">Let's talk about your workflow.</p>
+  {
+    fields.map((field) => (
+      <label class="flex flex-col gap-2 text-sm">
+        {field.label}
+        <input
+          type="text"
+          name={field.name}
+          autocomplete={field.autocomplete}
+          required
+          class="min-h-12 rounded-[4px] border border-text bg-white px-4 text-base outline-none focus:border-ink focus:ring-2 focus:ring-lavender-grey"
+        />
+      </label>
+    ))
+  }
+  <label class="flex flex-col gap-2 text-sm">
+    What would you like to automate?
+    <textarea
+      name="automate"
+      rows="4"
+      required
+      class="rounded-[4px] border border-text bg-white px-4 py-3 text-base outline-none focus:border-ink focus:ring-2 focus:ring-lavender-grey"
+    ></textarea>
+  </label>
+  <!-- Spam trap: real people never see or fill this. -->
+  <label class="hidden" aria-hidden="true">
+    Leave empty
+    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  </label>
+  <button type="submit" class="btn btn-dark self-stretch sm:self-start" data-submit>
+    Send Request
+    <Icon name="arrow-right" size={18} />
+  </button>
+  <p class="min-h-6 text-[0.9375rem]" role="status" aria-live="polite" data-form-status></p>
+</form>

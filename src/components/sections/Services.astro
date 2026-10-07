@@ -1,0 +1,57 @@
+---
+import { services } from '../../data/site';
+import CarouselControls from '../ui/CarouselControls.astro';
+import ImageSlot from '../ui/ImageSlot.astro';
+
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section id="services" class="overflow-hidden bg-lavender-light py-24 lg:py-36" aria-labelledby="services-title" data-carousel>
+  <div class="container-x flex items-end justify-between gap-6">
+    <div class="flex flex-col gap-4">
+      <p class="eyebrow" data-carousel-count>01 / {pad(services.length)}</p>
+      <h2 id="services-title" class="text-h1" data-split>What we automate</h2>
+    </div>
+    <CarouselControls label="services" />
+  </div>
+
+  <ul
+    class="no-scrollbar mt-10 flex snap-x snap-mandatory scroll-ps-5 gap-4 overflow-x-auto ps-5 pb-2 sm:scroll-ps-8 sm:ps-8 lg:mt-14 lg:scroll-ps-[max(72px,calc((100vw-1440px)/2+72px))] lg:gap-5 lg:ps-[max(72px,calc((100vw-1440px)/2+72px))]"
+    data-carousel-track
+    data-reveal-stagger
+  >
+    {
+      services.map((service, i) => (
+        <li class="w-[82vw] max-w-[560px] shrink-0 snap-start sm:w-[440px] lg:w-[560px]" data-slide>
+          <article class="flex h-full flex-col border border-line bg-white">
+            <div class="relative isolate h-[300px] overflow-hidden lg:h-[400px]">
+              <div class="absolute inset-0 -z-10">
+                <ImageSlot label={service.image} sizes="(min-width: 1024px) 560px, 82vw" />
+              </div>
+              <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(23,23,23,0)_40%,rgba(23,23,23,0.65)_100%)]"></div>
+              <div class="flex h-full flex-col justify-end gap-2 p-6 text-white lg:p-8">
+                <span class="font-serif text-xl lg:text-2xl">{pad(i + 1)}</span>
+                <h3 class="text-[2.25rem] leading-none tracking-[-0.03em] lg:text-[3rem]">{service.title}</h3>
+              </div>
+            </div>
+            <div class="flex flex-1 flex-col gap-4 p-6 lg:p-8">
+              <ol class="flex flex-wrap items-center gap-2" aria-label={`${service.title} flow`}>
+                {service.steps.map((step) => (
+                  <li class="rounded-full border border-line px-3.5 py-1.5 text-[0.8125rem]">{step}</li>
+                ))}
+              </ol>
+              <p class="text-[0.9375rem] text-ink">Saves {service.saves}</p>
+            </div>
+          </article>
+        </li>
+      ))
+    }
+    <li class="w-px shrink-0 lg:w-[max(72px,calc((100vw-1440px)/2+72px))]" aria-hidden="true"></li>
+  </ul>
+
+  <div class="container-x mt-8 lg:mt-10">
+    <div class="relative h-0.5 bg-line" aria-hidden="true">
+      <div class="absolute inset-y-0 left-0 w-0 bg-text" data-carousel-progress></div>
+    </div>
+  </div>
+</section>

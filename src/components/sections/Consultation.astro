@@ -1,0 +1,23 @@
+---
+import ContactForm from '../ContactForm.astro';
+
+interface Props {
+  /** Render the heading as the page's h1 (on /contact). */
+  asPage?: boolean;
+}
+
+const { asPage = false } = Astro.props;
+const Heading = asPage ? 'h1' : 'h2';
+---
+
+<section id="contact" class="container-x scroll-mt-20 py-24 lg:py-36" aria-labelledby="contact-title">
+  <div class="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
+    <div class="flex flex-col gap-6">
+      <Heading id="contact-title" class="text-h1 max-w-[14ch]" data-split>Tell us what takes too much time.</Heading>
+      <p class="text-lead max-w-[32rem]" data-reveal>
+        Describe the repetitive process that's slowing your business down. We'll help you identify what can be automated.
+      </p>
+    </div>
+    <ContactForm />
+  </div>
+</section>
