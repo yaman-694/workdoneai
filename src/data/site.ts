@@ -1,5 +1,12 @@
 // All homepage copy and structured content lives here so sections stay presentational.
 // Numbers marked `example: true` are illustrative and must be replaced with real client results before launch.
+import type { ImageMetadata } from 'astro';
+import leadsPhoto from '../assets/images/leads.webp';
+import whatsappPhoto from '../assets/images/whatsapp.webp';
+import aiAgentsPhoto from "../assets/images/ai-agents.webp";
+import appointmentPhoto from '../assets/images/appointment.webp';
+import crmPhoto from '../assets/images/crm.webp';
+import businessWorkflowsPhoto from '../assets/images/business-workflows.webp';
 
 export const site = {
   name: 'workdoneai',
@@ -49,20 +56,66 @@ export const manualTasks = [
   'Creating repetitive reports',
 ];
 
+/**
+ * Weekly time savings are estimates for a typical small business handling about
+ * 25 enquiries a week (the same volume behind the hero's 73 hrs a month).
+ * Replace them with measured client results as they come in.
+ */
+export const savingsBasis = 'Estimated for a business handling about 25 enquiries a week.';
+
 export interface Service {
   title: string;
   steps: string[];
+  /** Estimated hours saved per week; see `savingsBasis`. */
   saves: string;
+  /** Describes the photo: alt text, or the placeholder caption until a photo exists. */
   image: string;
+  photo?: ImageMetadata;
 }
 
 export const services: Service[] = [
-  { title: 'Lead Automation', steps: ['Capture', 'Qualify', 'Assign', 'Follow-up'], saves: '[X hrs / week]', image: 'Sales inbox' },
-  { title: 'WhatsApp Automation', steps: ['Message', 'Understand', 'Respond', 'Act'], saves: '[X hrs / week]', image: 'Phone with a WhatsApp chat' },
-  { title: 'Appointment Automation', steps: ['Request', 'Availability', 'Booking', 'Reminder'], saves: '[X hrs / week]', image: 'Calendar on a desk' },
-  { title: 'CRM Automation', steps: ['Lead', 'Update', 'Assign', 'Follow-up'], saves: '[X hrs / week]', image: 'Team at a laptop' },
-  { title: 'AI Agents', steps: ['Understand', 'Decide', 'Execute'], saves: '[X hrs / week]', image: 'Customer chatting on a phone' },
-  { title: 'Business Workflows', steps: ['Trigger', 'Process', 'Connect', 'Complete'], saves: '[X hrs / week]', image: 'Operations desk' },
+  {
+    title: "Lead Automation",
+    steps: ["Capture", "Qualify", "Assign", "Follow-up"],
+    saves: "~6 hrs / week",
+    image: "People walking across a sunlit plaza towards the same point",
+    photo: leadsPhoto,
+  },
+  {
+    title: "WhatsApp Automation",
+    steps: ["Message", "Understand", "Respond", "Act"],
+    saves: "~8 hrs / week",
+    image: "Phone with a WhatsApp chat",
+    photo: whatsappPhoto,
+  },
+  {
+    title: "Appointment Automation",
+    steps: ["Request", "Availability", "Booking", "Reminder"],
+    saves: "~5 hrs / week",
+    image: "Calendar on a desk",
+    photo: appointmentPhoto,
+  },
+  {
+    title: "CRM Automation",
+    steps: ["Lead", "Update", "Assign", "Follow-up"],
+    saves: "~3 hrs / week",
+    image: "Team at a laptop",
+    photo: crmPhoto,
+  },
+  {
+    title: "AI Agents",
+    steps: ["Understand", "Decide", "Execute"],
+    saves: "~10 hrs / week",
+    image: "Customer chatting on a phone",
+    photo: aiAgentsPhoto,
+  },
+  {
+    title: "Business Workflows",
+    steps: ["Trigger", "Process", "Connect", "Complete"],
+    saves: "~4 hrs / week",
+    image: "Operations desk",
+    photo: businessWorkflowsPhoto,
+  },
 ];
 
 export interface Flow {
@@ -146,12 +199,12 @@ export const processSteps = [
 ];
 
 export const industries = [
-  { name: 'Healthcare', text: 'Appointment booking, reminders, enquiries.', image: 'Clinic reception' },
-  { name: 'Real Estate', text: 'Lead qualification, property enquiries, follow-ups.', image: 'Property viewing' },
-  { name: 'Restaurants', text: 'Reservations, customer enquiries, notifications.', image: 'Restaurant floor' },
-  { name: 'Professional Services', text: 'Lead intake, scheduling, documents, follow-ups.', image: 'Consultant with a client' },
-  { name: 'Local Businesses', text: 'Bookings, enquiries, reminders, reviews.', image: 'Salon or local shop' },
-  { name: 'E-commerce', text: 'Customer communication, order notifications, support workflows.', image: 'Packing orders' },
+  { name: 'Healthcare', text: 'Appointment booking, reminders, enquiries.', saves: '~8 hrs / week', image: 'Clinic reception' },
+  { name: 'Real Estate', text: 'Lead qualification, property enquiries, follow-ups.', saves: '~7 hrs / week', image: 'Property viewing' },
+  { name: 'Restaurants', text: 'Reservations, customer enquiries, notifications.', saves: '~6 hrs / week', image: 'Restaurant floor' },
+  { name: 'Professional Services', text: 'Lead intake, scheduling, documents, follow-ups.', saves: '~6 hrs / week', image: 'Consultant with a client' },
+  { name: 'Local Businesses', text: 'Bookings, enquiries, reminders, reviews.', saves: '~5 hrs / week', image: 'Salon or local shop' },
+  { name: 'E-commerce', text: 'Customer communication, order notifications, support workflows.', saves: '~9 hrs / week', image: 'Packing orders' },
 ];
 
 // Only list tools we actually support (see PLAN.md section 4.8).

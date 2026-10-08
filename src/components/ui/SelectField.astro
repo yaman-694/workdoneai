@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import type { SelectField } from '../../data/contact-form';
+
+interface Props {
+  field: SelectField;
+  /** Name of the text input revealed when "Other" is picked. */
+  otherTarget?: string;
+}
+
+const { field, otherTarget } = Astro.props;
+---
+
+<label class="flex flex-col gap-2 text-sm">
+  {field.label}
+  <span class="relative">
+    <select name={field.name} required class="field field-select [&_option]:text-text" data-other-target={otherTarget}>
+      <option value="" disabled selected>{field.placeholder}</option>
+      {field.options.map((option) => <option value={option}>{option}</option>)}
+    </select>
+    <Icon name="chevron-down" size={18} class="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2" />
+  </span>
+</label>

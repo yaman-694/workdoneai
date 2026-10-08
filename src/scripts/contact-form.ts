@@ -1,5 +1,7 @@
+import { OTHER_OPTION } from '../data/contact-form';
+
 const messages = {
-  invalid: 'Please fill in every field so we can get back to you.',
+  invalid: 'Please fill in the required fields so we can get back to you.',
   sending: 'Sending...',
   sent: "Thanks. We've got your request and will be in touch shortly.",
   failed: 'Something went wrong. Please try again in a moment.',
@@ -31,9 +33,28 @@ async function submit(form: HTMLFormElement): Promise<Status> {
   return response.ok ? 'sent' : 'failed';
 }
 
+/** Shows the free-text box tied to a select only while its "Other" option is picked. */
+function syncOtherField(form: HTMLFormElement, select: HTMLSelectElement): void {
+  const wrapper = form.querySelector<HTMLElement>(`[data-other-field="${select.dataset.otherTarget}"]`);
+  const input = wrapper?.querySelector<HTMLInputElement>('input');
+  if (!wrapper || !input) return;
+  const isOther = select.value === OTHER_OPTION;
+  wrapper.hidden = !isOther;
+  input.disabled = !isOther;
+  input.required = isOther;
+}
+
+function initOtherFields(form: HTMLFormElement): () => void {
+  const selects = [...form.querySelectorAll<HTMLSelectElement>('select[data-other-target]')];
+  const syncAll = () => selects.forEach((select) => syncOtherField(form, select));
+  selects.forEach((select) => select.addEventListener('change', () => syncOtherField(form, select)));
+  return syncAll;
+}
+
 /** Posts the contact form as JSON to the configured webhook (n8n). */
 export function initContactForms(): void {
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const syncOtherFields = initOtherFields(form);
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const honeypot = form.elements.namedItem('website') as HTMLInputElement | null;
@@ -45,7 +66,9 @@ export function initContactForms(): void {
       setStatus(form, 'sending');
       const status = await submit(form).catch((): Status => 'failed');
       setStatus(form, status);
-      if (status === 'sent') form.reset();
+      if (status !== 'sent') return;
+      form.reset();
+      syncOtherFields();
     });
   });
 }

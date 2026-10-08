@@ -1,11 +1,13 @@
 ---
 import Icon from './ui/Icon.astro';
+import SelectField from './ui/SelectField.astro';
+import { callTimeField, industryField, manualEnquiriesField, teamSizeField } from '../data/contact-form';
 
-const fields = [
-  { name: 'name', label: 'Name', autocomplete: 'name' },
-  { name: 'business', label: 'Business name', autocomplete: 'organization' },
-  { name: 'contact', label: 'Email / WhatsApp', autocomplete: 'email' },
-  { name: 'about', label: 'What does your business do?', autocomplete: 'off' },
+const contactFields = [
+  { name: 'name', label: 'Your name', type: 'text', autocomplete: 'name', required: true, placeholder: undefined },
+  { name: 'email', label: 'Work email', type: 'email', autocomplete: 'email', required: true, placeholder: undefined },
+  { name: 'whatsapp', label: 'WhatsApp number (optional)', type: 'tel', autocomplete: 'tel', required: false, placeholder: '+91 98765 43210' },
+  { name: 'company', label: 'Company name', type: 'text', autocomplete: 'organization', required: true, placeholder: undefined },
 ] as const;
 
 const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
@@ -14,26 +16,37 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
 <form class="flex flex-col gap-5" action={endpoint || undefined} method="post" novalidate data-contact-form data-endpoint={endpoint}>
   <p class="font-serif text-h4">Let's talk about your workflow.</p>
   {
-    fields.map((field) => (
+    contactFields.map((field) => (
       <label class="flex flex-col gap-2 text-sm">
         {field.label}
         <input
-          type="text"
+          type={field.type}
           name={field.name}
           autocomplete={field.autocomplete}
-          required
-          class="min-h-12 rounded-[4px] border border-text bg-white px-4 text-base outline-none focus:border-ink focus:ring-2 focus:ring-lavender-grey"
+          required={field.required}
+          placeholder={field.placeholder}
+          class="field min-h-12"
         />
       </label>
     ))
   }
+  <div class="grid gap-5 sm:grid-cols-2">
+    <SelectField field={industryField} />
+    <SelectField field={teamSizeField} />
+  </div>
+  <SelectField field={manualEnquiriesField} />
+  <SelectField field={callTimeField} otherTarget="callTimeOther" />
+  <label class="flex flex-col gap-2 text-sm" hidden data-other-field="callTimeOther">
+    Your preferred time (IST)
+    <input type="text" name="callTimeOther" disabled placeholder="e.g. Saturday morning" class="field min-h-12" />
+  </label>
   <label class="flex flex-col gap-2 text-sm">
-    What would you like to automate?
+    Tell us how a normal day runs (optional)
     <textarea
-      name="automate"
+      name="dayToDay"
       rows="4"
-      required
-      class="rounded-[4px] border border-text bg-white px-4 py-3 text-base outline-none focus:border-ink focus:ring-2 focus:ring-lavender-grey"
+      placeholder="e.g. Customers message us on WhatsApp, we note it in Excel, then call them back to confirm..."
+      class="field py-3"
     ></textarea>
   </label>
   <!-- Spam trap: real people never see or fill this. -->
@@ -42,7 +55,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
     <input type="text" name="website" tabindex="-1" autocomplete="off" />
   </label>
   <button type="submit" class="btn btn-dark self-stretch sm:self-start" data-submit>
-    Send Request
+    Book my free call
     <Icon name="arrow-right" size={18} />
   </button>
   <p class="min-h-6 text-[0.9375rem]" role="status" aria-live="polite" data-form-status></p>

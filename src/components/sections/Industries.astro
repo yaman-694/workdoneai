@@ -1,5 +1,5 @@
 ---
-import { industries } from '../../data/site';
+import { industries, savingsBasis } from '../../data/site';
 import CarouselControls from '../ui/CarouselControls.astro';
 import Icon from '../ui/Icon.astro';
 import ImageSlot from '../ui/ImageSlot.astro';
@@ -35,7 +35,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
               <div class="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
                 <p class="text-lead max-w-[32rem]">{industry.text}</p>
                 <p class="text-white/90">
-                  Typical saving: <span class="font-serif text-2xl">[X hrs / week]</span>
+                  Typical saving: <span class="font-serif text-2xl">{industry.saves}</span>
                 </p>
               </div>
             </div>
@@ -50,6 +50,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="relative h-0.5 bg-line" aria-hidden="true">
       <div class="absolute inset-y-0 left-0 w-0 bg-text" data-carousel-progress></div>
     </div>
+    <p class="-mt-6 text-xs text-muted">{savingsBasis}</p>
     <a href="#contact" class="btn btn-outline self-start">
       Explore Your Industry
       <Icon name="arrow-right" size={18} />

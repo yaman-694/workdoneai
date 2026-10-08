@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import '@fontsource-variable/inter';
 import '@fontsource-variable/newsreader/opsz.css';
 import '../styles/global.css';
@@ -52,6 +54,8 @@ const { title, description, noindex, overlayHeader = false } = Astro.props;
         scroll-margin-top: 4.5rem;
       }
     </style>
+    <Analytics />
+    <SpeedInsights />
   </head>
   <body>
     <a

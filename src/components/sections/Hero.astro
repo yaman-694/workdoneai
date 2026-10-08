@@ -3,7 +3,6 @@ import { cta, heroStats } from '../../data/site';
 import Icon from '../ui/Icon.astro';
 import ImageSlot from '../ui/ImageSlot.astro';
 
-const hasExamples = heroStats.some((stat) => stat.example);
 ---
 
 <section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-plum text-white">
@@ -11,7 +10,6 @@ const hasExamples = heroStats.some((stat) => stat.example);
     <ImageSlot
       label="Business owner relaxed at the front desk while enquiries are handled automatically"
       eager
-      labelClass="top-24 hidden sm:block"
     />
   </div>
   <div
@@ -60,6 +58,5 @@ const hasExamples = heroStats.some((stat) => stat.example);
         ))
       }
     </dl>
-    {hasExamples && <p class="text-xs text-lavender/90">* Example figures. Replace with real client results before launch.</p>}
   </div>
 </section>

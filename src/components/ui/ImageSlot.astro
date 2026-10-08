@@ -13,11 +13,9 @@ interface Props {
   eager?: boolean;
   sizes?: string;
   class?: string;
-  /** Placement of the placeholder label, e.g. to clear a fixed header. */
-  labelClass?: string;
 }
 
-const { label, src, alt = '', eager = false, sizes = '100vw', class: className = '', labelClass = 'top-4' } = Astro.props;
+const { label, src, alt = '', eager = false, sizes = '100vw', class: className = '' } = Astro.props;
 ---
 
 {
@@ -40,7 +38,6 @@ const { label, src, alt = '', eager = false, sizes = '100vw', class: className =
       data-media
     >
       <div class="absolute inset-0 bg-[radial-gradient(120%_80%_at_80%_10%,#a09abc_0%,#4a4370_45%,#3b3650_100%)]"></div>
-      <span class:list={['absolute right-4 left-4 text-right text-xs text-lavender/80', labelClass]}>[Photo: {label}]</span>
     </div>
   )
 }
