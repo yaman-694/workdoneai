@@ -1,4 +1,5 @@
 ---
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
 import Icon from './ui/Icon.astro';
 import SelectField from './ui/SelectField.astro';
 import { callTimeField, industryField, manualEnquiriesField, teamSizeField } from '../data/contact-form';
@@ -9,11 +10,9 @@ const contactFields = [
   { name: 'whatsapp', label: 'WhatsApp number (optional)', type: 'tel', autocomplete: 'tel', required: false, placeholder: '+91 98765 43210' },
   { name: 'company', label: 'Company name', type: 'text', autocomplete: 'organization', required: true, placeholder: undefined },
 ] as const;
-
-const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
 ---
 
-<form class="flex flex-col gap-5" action={endpoint || undefined} method="post" novalidate data-contact-form data-endpoint={endpoint}>
+<form class="flex flex-col gap-5" action="/api/contact" method="post" novalidate data-contact-form>
   <p class="font-serif text-h4">Let's talk about your workflow.</p>
   {
     contactFields.map((field) => (
@@ -54,6 +53,11 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_WEBHOOK_URL ?? '';
     Leave empty
     <input type="text" name="website" tabindex="-1" autocomplete="off" />
   </label>
+  <!--
+    Cloudflare Turnstile bot check. It has no height unless Cloudflare needs the visitor to click,
+    so -mt-5 cancels the form gap until the widget turns interactive.
+  -->
+  <div class="-mt-5 data-interactive:mt-0" data-turnstile data-sitekey={PUBLIC_TURNSTILE_SITE_KEY}></div>
   <button type="submit" class="btn btn-dark self-stretch sm:self-start" data-submit>
     Book my free call
     <Icon name="arrow-right" size={18} />

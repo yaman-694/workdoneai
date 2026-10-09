@@ -1,14 +1,24 @@
 import { OTHER_OPTION } from '../data/contact-form';
+import { renderTurnstile, type TurnstileWidget } from './turnstile';
 
 const messages = {
   invalid: 'Please fill in the required fields so we can get back to you.',
+  checking: "One moment, we're checking you're not a bot. Please try again in a few seconds.",
+  checkUnavailable: "Our spam check couldn't load. Please allow challenges.cloudflare.com (or pause your blocker) and reload.",
   sending: 'Sending...',
   sent: "Thanks. We've got your request and will be in touch shortly.",
+  rejected: "We couldn't verify this request. Please reload the page and try again.",
   failed: 'Something went wrong. Please try again in a moment.',
-  notConfigured: 'The form is not connected yet. Set PUBLIC_CONTACT_WEBHOOK_URL to receive submissions.',
 } as const;
 
 type Status = keyof typeof messages;
+
+/** How the /api/contact response codes map to what the visitor sees. */
+const statusByResponseCode: Record<number, Status> = {
+  200: 'sent',
+  400: 'invalid',
+  403: 'rejected',
+};
 
 function setStatus(form: HTMLFormElement, status: Status): void {
   const output = form.querySelector<HTMLElement>('[data-form-status]');
@@ -16,21 +26,25 @@ function setStatus(form: HTMLFormElement, status: Status): void {
   form.querySelector<HTMLButtonElement>('[data-submit]')!.disabled = status === 'sending';
 }
 
-function payload(form: HTMLFormElement): Record<string, string> {
-  const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
-  delete data.website;
-  return { ...data, page: window.location.pathname, submittedAt: new Date().toISOString() };
-}
-
 async function submit(form: HTMLFormElement): Promise<Status> {
-  const endpoint = form.dataset.endpoint;
-  if (!endpoint) return 'notConfigured';
-  const response = await fetch(endpoint, {
+  const response = await fetch(form.action, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload(form)),
+    body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), page: window.location.pathname }),
   });
-  return response.ok ? 'sent' : 'failed';
+  return statusByResponseCode[response.status] ?? 'failed';
+}
+
+/** Resolves to null when the Turnstile script is blocked or fails, so the form can say so. */
+async function initTurnstile(form: HTMLFormElement): Promise<TurnstileWidget | null> {
+  const container = form.querySelector<HTMLElement>('[data-turnstile]');
+  if (!container) return null;
+  return renderTurnstile(container).catch(() => null);
+}
+
+/** Picks the status to show when the bot check has no token yet. */
+function missingTokenStatus(widget: TurnstileWidget | null): Status {
+  return widget ? 'checking' : 'checkUnavailable';
 }
 
 /** Shows the free-text box tied to a select only while its "Other" option is picked. */
@@ -51,10 +65,11 @@ function initOtherFields(form: HTMLFormElement): () => void {
   return syncAll;
 }
 
-/** Posts the contact form as JSON to the configured webhook (n8n). */
+/** Posts the contact form as JSON to the site's /api/contact endpoint, which forwards it to n8n. */
 export function initContactForms(): void {
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
     const syncOtherFields = initOtherFields(form);
+    const turnstile = initTurnstile(form);
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const honeypot = form.elements.namedItem('website') as HTMLInputElement | null;
@@ -63,9 +78,12 @@ export function initContactForms(): void {
         form.reportValidity();
         return setStatus(form, 'invalid');
       }
+      const widget = await turnstile;
+      if (!widget?.token()) return setStatus(form, missingTokenStatus(widget));
       setStatus(form, 'sending');
       const status = await submit(form).catch((): Status => 'failed');
       setStatus(form, status);
+      widget.reset();
       if (status !== 'sent') return;
       form.reset();
       syncOtherFields();

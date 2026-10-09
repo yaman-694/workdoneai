@@ -18,8 +18,20 @@ The full brief and design decisions live in [PLAN.md](PLAN.md).
 
 Copy `.env.example` to `.env` and set:
 
-- `PUBLIC_CONTACT_WEBHOOK_URL`: the n8n (or other) webhook that receives contact form submissions as JSON.
-  Without it the form shows a "not connected" message instead of sending.
+- `PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`: the Cloudflare Turnstile widget keys for the contact form bot check.
+  Locally you can use Cloudflare's always-pass test keys listed in `.env.example`.
+- `CONTACT_WEBHOOK_URL`: the n8n webhook that stores and emails contact form submissions.
+- `CONTACT_WEBHOOK_SECRET`: a random string (`openssl rand -hex 32`) sent as the `X-Webhook-Secret` header.
+  It must match the Header Auth credential on the n8n webhook node.
+
+All four are required; the build and the API route fail fast when one is missing.
+
+## Contact form flow
+
+The form posts to `/api/contact`, the only route that runs as a Vercel function (every page stays static).
+The endpoint drops spam-trap hits, checks every field against the form's own options and length limits, and verifies the Turnstile token with Cloudflare.
+Only then does it forward the submission to n8n with the shared secret header, so the n8n URL and secret never reach the browser.
+The n8n workflow "WorkDoneAI Contact Form" appends a row to the "WorkDoneAI Leads" Google Sheet and emails yaman@workdoneai.com through Hostinger SMTP.
 
 ## Where things live
 
@@ -37,5 +49,5 @@ Copy `.env.example` to `.env` and set:
 - Review FAQ answers marked `[REVIEW]`.
 - Add real photos: import them and pass `src` to each `ImageSlot`.
 - Add privacy and terms text in `src/pages/privacy.astro` and `src/pages/terms.astro`.
-- Set `PUBLIC_CONTACT_WEBHOOK_URL` in the hosting environment.
+- Set the four contact form variables from `.env.example` in Vercel, using real Turnstile keys for the `workdoneai.com` hostname.
 - Swap the stand-in heading font (Newsreader) for P22 Mackinac Pro once an Adobe Fonts kit exists: load the kit in `BaseLayout.astro` and change `--font-serif` in `global.css`.

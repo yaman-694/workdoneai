@@ -19,7 +19,7 @@ These items conflict between the earlier notes in this file and the full brief, 
 | Color palette | Lavender palette (section 5) with `--ink` `#4A4370` for text, links and lines | Built |
 | Heading font | P22 Mackinac Pro via Adobe Fonts | Open: no kit yet, Newsreader is the stand-in |
 | Hero visual | Photo hero with overlay text and results; workflow animation in the showcase | Built with placeholder photo |
-| Contact form backend | n8n webhook via `PUBLIC_CONTACT_WEBHOOK_URL` | Open: webhook URL needed |
+| Contact form backend | `/api/contact` Vercel function, Turnstile, then n8n webhook with a secret header | Done |
 | Hosting | Any static host | Open |
 | Example figures | Time saved, revenue growth, per-service savings | Open: replace with real client results before launch |
 
@@ -499,7 +499,7 @@ Write about real business problems, not generic AI articles.
 | SEO | Shared `SEO.astro` (title, description, canonical, Open Graph), Organization and FAQPage JSON-LD |
 | Sitemap / robots | `@astrojs/sitemap` (official Astro integration), `public/robots.txt` |
 | Images | `ImageSlot.astro` renders labelled placeholders now and `astro:assets` `<Image>` once real photos are added |
-| Contact form | Client-side JSON POST to an n8n webhook, with honeypot and status messages |
+| Contact form | JSON POST to `/api/contact`, which validates, checks Turnstile and forwards to n8n; honeypot and status messages |
 
 Two deviations from section 6:
 
@@ -567,7 +567,7 @@ Do not just shrink the desktop layout.
 - [ ] Reusable workflow SVG component and hero animation
 - [ ] Homepage sections 1-14 as Astro components
 - [ ] Interactive Automation Showcase
-- [ ] Contact form posting to the n8n webhook, with email notification
+- [x] Contact form posting to the n8n webhook, with email notification
 - [ ] FAQ accordion with FAQPage JSON-LD
 - [ ] Privacy and Terms pages
 - [ ] SEO component, `@astrojs/sitemap`, `robots.txt`
