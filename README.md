@@ -26,6 +26,10 @@ Copy `.env.example` to `.env` and set:
 
 All four are required; the build and the API route fail fast when one is missing.
 
+`@astrojs/vercel` is pinned to exactly 11.0.12.
+Version 11.0.13 bundles a top-level `import "rolldown"` into the server function, which crashes on Vercel with "Cannot find native binding".
+Check the built `.vercel/output/functions/_render.func/.vercel/output/server/entry.mjs` for that import before upgrading.
+
 ## Contact form flow
 
 The form posts to `/api/contact`, the only route that runs as a Vercel function (every page stays static).
