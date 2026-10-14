@@ -2,6 +2,7 @@
 import Consultation from '../components/sections/Consultation.astro';
 import LiveDemo from '../components/sections/LiveDemo.astro';
 import WhyUs from '../components/sections/WhyUs.astro';
+import Icon from '../components/ui/Icon.astro';
 import { founder } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
@@ -20,6 +21,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="flex flex-col gap-2" data-reveal>
         <h2 class="text-h2">{founder.name}</h2>
         <p class="eyebrow">{founder.role}</p>
+        <a
+          href={founder.linkedin}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex items-center gap-1.5 self-start text-[0.9375rem] underline underline-offset-4 hover:text-ink"
+        >
+          Connect on LinkedIn
+          <Icon name="arrow-up-right" size={16} />
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
       </div>
       <div class="flex max-w-[44rem] flex-col gap-5 text-lead" data-reveal>
         {founder.bio.map((paragraph) => <p>{paragraph}</p>)}

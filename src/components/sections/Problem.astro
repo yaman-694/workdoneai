@@ -10,14 +10,18 @@ import Icon from '../ui/Icon.astro';
     {
       manualTasks.map((task) => (
         <li class="flex items-baseline justify-between gap-6 border-t border-text py-4 lg:py-6">
-          <span class="relative font-serif text-[1.5rem] leading-tight tracking-[-0.02em] lg:text-[2.5rem]">
+          <span class="relative font-serif text-[1.5rem] leading-tight tracking-[-0.02em] lg:text-[2.5rem]" data-strike-text>
             {task}
             <span
               class="absolute top-[48%] left-0 h-[3px] w-full origin-left bg-almond lg:h-1"
               aria-hidden="true"
               data-strike></span>
+            <canvas
+              class="pointer-events-none absolute -inset-x-[4%] inset-y-0 hidden h-full w-[108%] mix-blend-multiply"
+              aria-hidden="true"
+              data-strike-brush></canvas>
           </span>
-          <Icon name="x" size={28} class="shrink-0 text-almond-ink" />
+          <span class="shrink-0 text-almond-ink" data-strike-mark><Icon name="x" size={28} /></span>
         </li>
       ))
     }

@@ -54,12 +54,14 @@ export interface Stat {
   suffix?: string;
   label: string;
   example?: boolean;
+  /** Hidden on phones, where four stats crowd the first screen. */
+  desktopOnly?: boolean;
 }
 
 export const heroStats: Stat[] = [
   { value: '< 1 min', label: 'to handle a property enquiry that used to take 45 minutes', example: true },
-  { value: '73 hrs', count: 73, suffix: ' hrs', label: 'of manual work saved every month', example: true },
-  { value: '+25%', count: 25, prefix: '+', suffix: '%', label: 'revenue from faster replies and no missed leads', example: true },
+  { value: '73 hrs', count: 73, suffix: ' hrs', label: 'of manual work saved every month', example: true, desktopOnly: true },
+  { value: '+25%', count: 25, prefix: '+', suffix: '%', label: 'revenue from faster replies and no missed leads', example: true, desktopOnly: true },
   { value: '24/7', label: 'buyers get an answer, even after hours' },
 ];
 
@@ -146,6 +148,28 @@ export interface Demo {
   href: string;
   action: string;
 }
+
+export interface Chapter {
+  label: string;
+  /** Seconds into the video where this chapter starts. */
+  start: number;
+}
+
+/**
+ * The Arav walkthrough video. Chapter starts mirror the scene timing in the demo-video project
+ * (demo-video/src/timing.ts); update them together whenever the video is re-rendered.
+ */
+export const demoVideo = {
+  duration: 66.4,
+  chapters: [
+    { label: 'Reply', start: 0 },
+    { label: 'Qualify', start: 14.2 },
+    { label: 'Match', start: 24.8 },
+    { label: 'Contact', start: 33.2 },
+    { label: 'Alert', start: 39.6 },
+    { label: 'Visit', start: 48.8 },
+  ] satisfies Chapter[],
+} as const;
 
 /** Live demos we built and run ourselves; the proof of work until client case studies exist. */
 export const demos: Demo[] = [
@@ -286,6 +310,7 @@ export const legal = {
 export const founder = {
   name: 'Yaman Jain',
   role: 'Founder, workdoneai',
+  linkedin: 'https://www.linkedin.com/in/yaman-jain/',
   bio: [
     "I'm Yaman, and I started workdoneai to take the repetitive work off real estate teams.",
     'Good leads go cold while someone copies details into a spreadsheet or waits to call back. Software can handle most of that work, and agents can spend the time on buyers and site visits.',

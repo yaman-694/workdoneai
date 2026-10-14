@@ -1,5 +1,5 @@
 ---
-import { demos } from '../../data/site';
+import { demos, demoVideo } from '../../data/site';
 import Icon from '../ui/Icon.astro';
 
 const tryItSteps = ['Message Arav on Telegram', 'Answer its questions like a buyer', 'See your lead land in the CRM'];
@@ -23,39 +23,98 @@ const tryItSteps = ['Message Arav on Telegram', 'Answer its questions like a buy
       </ol>
     </div>
 
-    <figure class="relative overflow-hidden rounded-[4px] border border-white/25 bg-plum" data-demo-video data-reveal>
-      <video
-        class="block aspect-video w-full"
-        poster="/videos/arav-demo-poster.jpg"
-        muted
-        loop
-        playsinline
-        preload="none"
-        aria-label="One-minute walkthrough: Arav qualifies a property buyer on Telegram, alerts the sales team and books a site visit"
+    <div class="flex flex-col gap-4" data-demo-video>
+      <figure
+        class="relative overflow-hidden rounded-[4px] border border-white/25 bg-plum max-sm:mx-auto max-sm:w-[min(100%,calc(78svh*9/16))]"
+        data-demo-frame
       >
-        <source src="/videos/arav-demo.webm" type="video/webm" />
-        <source src="/videos/arav-demo.mp4" type="video/mp4" />
-      </video>
-      <button
-        type="button"
-        class="absolute inset-0 hidden place-items-center bg-plum/30 text-white"
-        data-demo-play
-        aria-label="Play the demo video"
-      >
-        <span class="grid size-20 place-items-center rounded-full bg-lavender text-plum lg:size-24">
-          <Icon name="play" size={32} />
-        </span>
-      </button>
-      <button
-        type="button"
-        class="absolute right-2.5 bottom-2.5 flex items-center gap-2 rounded-[4px] bg-plum/80 p-2 sm:right-4 sm:bottom-4 sm:px-3.5 sm:py-2.5 text-[0.8125rem] text-white backdrop-blur-sm hover:bg-plum lg:right-6 lg:bottom-6"
-        data-demo-sound
-        aria-pressed="false"
-      >
-        <span data-sound-off class="flex items-center gap-2"><Icon name="volume-off" size={18} /><span class="max-sm:sr-only">Play with sound</span></span>
-        <span data-sound-on class="hidden items-center gap-2"><Icon name="volume-on" size={18} /><span class="max-sm:sr-only">Mute</span></span>
-      </button>
-    </figure>
+        <video
+          class="block aspect-video w-full object-cover max-sm:aspect-[9/16]"
+          data-mobile-poster="/videos/arav-demo-vertical-poster.jpg"
+          data-mobile-sources="/videos/arav-demo-vertical.webm,/videos/arav-demo-vertical.mp4"
+          poster="/videos/arav-demo-poster.jpg"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-label="One-minute walkthrough: Arav qualifies a property buyer on Telegram, alerts the sales team and books a site visit"
+        >
+          <source src="/videos/arav-demo.webm" type="video/webm" />
+          <source src="/videos/arav-demo.mp4" type="video/mp4" />
+        </video>
+
+        <p
+          class="absolute top-3 left-3 hidden items-center gap-2 rounded-full sm:flex bg-plum/80 px-3 py-1.5 text-[0.75rem] tracking-[0.08em] text-white uppercase opacity-0 backdrop-blur-sm sm:top-5 sm:left-5"
+          data-demo-live
+        >
+          <span class="relative flex size-2">
+            <span class="absolute inset-0 rounded-full bg-[#7fd18b]" data-live-pulse></span>
+            <span class="relative size-2 rounded-full bg-[#7fd18b]"></span>
+          </span>
+          Now playing
+        </p>
+
+        <button
+          type="button"
+          class="absolute inset-0 hidden place-items-center bg-plum/30 text-white"
+          data-demo-play
+          aria-label="Play the demo video"
+        >
+          <span class="grid size-20 place-items-center rounded-full bg-lavender text-plum lg:size-24">
+            <Icon name="play" size={32} />
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="absolute top-1/2 left-1/2 flex -translate-1/2 items-center gap-3 rounded-full bg-lavender py-3 pr-6 pl-3.5 text-[0.9375rem] font-medium whitespace-nowrap text-plum shadow-[0_12px_40px_rgba(20,17,32,0.5)] sm:top-auto sm:right-6 sm:bottom-6 sm:left-auto sm:translate-0"
+          data-sound-cta
+        >
+          <span class="pointer-events-none absolute inset-0 rounded-full border-2 border-lavender" aria-hidden="true" data-sound-ripple></span>
+          <span class="pointer-events-none absolute inset-0 rounded-full border-2 border-lavender" aria-hidden="true" data-sound-ripple></span>
+          <span class="grid size-8 place-items-center rounded-full bg-plum text-lavender" aria-hidden="true">
+            <Icon name="volume-off" size={17} />
+          </span>
+          Tap for sound
+        </button>
+
+        <button
+          type="button"
+          class="absolute top-2.5 right-2.5 grid size-10 place-items-center rounded-full bg-plum/80 text-lavender backdrop-blur-sm hover:bg-plum sm:top-auto sm:right-6 sm:bottom-6 sm:size-12"
+          aria-label="Mute the demo video"
+          hidden
+          data-sound-mute
+        >
+          <span class="flex h-4 items-end gap-[3px]" aria-hidden="true">
+            {[0, 1, 2, 3].map(() => <span class="h-full w-[3px] origin-bottom rounded-full bg-lavender" data-eq></span>)}
+          </span>
+        </button>
+      </figure>
+
+      <ol class="grid grid-cols-6 gap-1.5 sm:gap-3" aria-label="Video chapters" data-chapters>
+        {
+          demoVideo.chapters.map((chapter, i) => (
+            <li>
+              <button
+                type="button"
+                class="group flex w-full flex-col gap-2 pt-1 text-left"
+                data-chapter
+                data-start={chapter.start}
+                aria-label={`Jump to ${chapter.label}`}
+              >
+                <span class="relative block h-[3px] w-full overflow-hidden rounded-full bg-white/20">
+                  <span class="absolute inset-0 origin-left scale-x-0 rounded-full bg-lavender" data-chapter-fill></span>
+                </span>
+                <span class="flex items-baseline gap-1.5 text-[0.6875rem] text-white/55 transition-colors duration-300 group-hover:text-white group-data-active:text-white sm:text-[0.8125rem]">
+                  <span class="hidden font-serif text-lavender sm:inline">{String(i + 1).padStart(2, '0')}</span>
+                  {chapter.label}
+                </span>
+              </button>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
 
     <ul class="grid gap-5 lg:grid-cols-2" data-reveal-stagger>
       {

@@ -1,3 +1,4 @@
+import { initBrushStrikes } from './brush-strike';
 import { initCarousels } from './carousel';
 import { initContactForms } from './contact-form';
 import { initDemoVideos } from './demo-video';
@@ -22,5 +23,6 @@ if (motionAllowed()) {
   initReveals();
 }
 initShowcases();
+initBrushStrikes();
 
 document.documentElement.classList.add('motion-ready');

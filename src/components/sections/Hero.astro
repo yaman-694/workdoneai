@@ -5,7 +5,7 @@ import ImageSlot from '../ui/ImageSlot.astro';
 
 ---
 
-<section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-plum text-white">
+<section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden lg:justify-center bg-plum text-white">
   <div class="absolute inset-0 -z-10" data-hero-media>
     <ImageSlot
       label="Real estate agent relaxed at the office while property enquiries are handled automatically"
@@ -41,7 +41,7 @@ import ImageSlot from '../ui/ImageSlot.astro';
     <dl class="mt-4 grid grid-cols-2 border-t border-white/35 lg:mt-8 lg:grid-cols-4" data-reveal-stagger>
       {
         heroStats.map((stat) => (
-          <div class="flex flex-col gap-2 pt-5 pr-4 lg:pt-7">
+          <div class:list={['flex-col gap-2 pt-5 pr-4 lg:pt-7', stat.desktopOnly ? 'hidden sm:flex' : 'flex']}>
             <dt class="order-2 max-w-[17rem] text-[0.8125rem] leading-snug text-lavender-light lg:text-[0.9375rem]">
               {stat.label}
               {stat.example && <span aria-hidden="true">*</span>}
