@@ -1,5 +1,5 @@
 ---
-import { cta, heroStats } from '../../data/site';
+import { cta, heroEstimateNote, heroStats } from '../../data/site';
 import Icon from '../ui/Icon.astro';
 import ImageSlot from '../ui/ImageSlot.astro';
 
@@ -8,7 +8,7 @@ import ImageSlot from '../ui/ImageSlot.astro';
 <section id="top" class="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-plum text-white">
   <div class="absolute inset-0 -z-10" data-hero-media>
     <ImageSlot
-      label="Business owner relaxed at the front desk while enquiries are handled automatically"
+      label="Real estate agent relaxed at the office while property enquiries are handled automatically"
       eager
     />
   </div>
@@ -18,20 +18,20 @@ import ImageSlot from '../ui/ImageSlot.astro';
   </div>
 
   <div class="container-x flex flex-col gap-7 pt-32 pb-8 lg:gap-9 lg:pt-44 lg:pb-12">
-    <p class="eyebrow text-lavender-light" data-reveal>Leads · Bookings · Follow-ups · CRM · AI Agents</p>
+    <p class="eyebrow text-lavender-light" data-reveal>Enquiries · Site Visits · Follow-ups · CRM</p>
     <h1 class="text-display max-w-[14ch]" data-split>
-      Your Business, <span class="block text-lavender">On Autopilot.</span>
+      Your Property Leads, <span class="block text-lavender">On Autopilot.</span>
     </h1>
     <div class="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
       <p class="text-lead max-w-[34rem] text-white/90" data-reveal>
-        We design and build custom automations that eliminate repetitive work from your business.
+        We build AI assistants and automations for real estate businesses, so every enquiry is answered, qualified and followed up.
       </p>
       <div class="flex flex-col gap-3 sm:flex-row" data-reveal>
         <a href="#contact" class="btn btn-primary">
           {cta.primary}
           <Icon name="arrow-right" size={18} />
         </a>
-        <a href="#how-it-works" class="btn btn-outline-light">
+        <a href="#demo" class="btn btn-outline-light">
           {cta.secondary}
           <Icon name="arrow-down" size={18} />
         </a>
@@ -58,5 +58,6 @@ import ImageSlot from '../ui/ImageSlot.astro';
         ))
       }
     </dl>
+    <p class="-mt-3 text-xs text-white/70 lg:-mt-5" data-reveal>* {heroEstimateNote}</p>
   </div>
 </section>

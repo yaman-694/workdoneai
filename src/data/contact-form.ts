@@ -1,4 +1,4 @@
-import { industries } from './site';
+import { audiences } from './site';
 
 export interface SelectField {
   name: string;
@@ -12,9 +12,9 @@ export const OTHER_OPTION = 'Other';
 
 export const industryField: SelectField = {
   name: 'industry',
-  label: 'Industry',
-  placeholder: 'Select industry',
-  options: [...industries.map((industry) => industry.name), OTHER_OPTION],
+  label: 'Business type',
+  placeholder: 'Select business type',
+  options: [...audiences, OTHER_OPTION],
 };
 
 export const teamSizeField: SelectField = {
@@ -26,7 +26,7 @@ export const teamSizeField: SelectField = {
 
 export const manualEnquiriesField: SelectField = {
   name: 'manualEnquiries',
-  label: 'Customer enquiries you handle by hand each day',
+  label: 'Property enquiries you handle by hand each day',
   placeholder: 'Select range',
   options: ['Under 20', '20-50', '50-200', '200+', 'Not sure'],
 };

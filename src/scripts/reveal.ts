@@ -4,17 +4,19 @@ const ENTER = 'top 88%';
 
 const all = <T extends Element = HTMLElement>(selector: string) => gsap.utils.toArray<T>(selector);
 
+/**
+ * The hero is the first screen, so its content plays on load; on short screens its lower edge
+ * sits below the ENTER line and would otherwise stay hidden until the visitor scrolls.
+ */
+const onEnter = (el: Element) => (el.closest('#top') ? {} : { scrollTrigger: { trigger: el, start: ENTER, once: true } });
+
 /** Blocks and grouped children fade up as they enter. */
 function revealBlocks(): void {
   all('[data-reveal]').forEach((el) => {
-    gsap.fromTo(el, { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, scrollTrigger: { trigger: el, start: ENTER, once: true } });
+    gsap.fromTo(el, { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, ...onEnter(el) });
   });
   all('[data-reveal-stagger]').forEach((group) => {
-    gsap.fromTo(
-      group.children,
-      { autoAlpha: 0, y: 32 },
-      { autoAlpha: 1, y: 0, stagger: 0.08, scrollTrigger: { trigger: group, start: ENTER, once: true } },
-    );
+    gsap.fromTo(group.children, { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, stagger: 0.08, ...onEnter(group) });
   });
 }
 
@@ -24,6 +26,7 @@ function splitHeadings(): void {
     SplitText.create(el, {
       type: 'lines',
       mask: 'lines',
+      linesClass: 'split-line',
       autoSplit: true,
       onSplit(split) {
         gsap.set(el, { visibility: 'visible' });
@@ -32,7 +35,7 @@ function splitHeadings(): void {
           stagger: 0.09,
           duration: 1.1,
           ease: 'power4.out',
-          scrollTrigger: { trigger: el, start: ENTER, once: true },
+          ...onEnter(el),
         });
       },
     });
@@ -55,7 +58,7 @@ function counters(): void {
       ease: 'power2.out',
       onStart: () => (el.textContent = formatCount(el, 0)),
       onUpdate: () => (el.textContent = formatCount(el, state.value)),
-      scrollTrigger: { trigger: el, start: ENTER, once: true },
+      ...onEnter(el),
     });
   });
 }

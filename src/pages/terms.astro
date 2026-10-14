@@ -1,7 +1,69 @@
 ---
+import LegalSection from '../components/ui/LegalSection.astro';
+import { legal, offer, site } from '../data/site';
 import LegalLayout from '../layouts/LegalLayout.astro';
+
+const mailto = `mailto:${legal.email}`;
 ---
 
 <LegalLayout title="Terms">
-  <p>[Terms of use to be provided.]</p>
+  <p class="text-base text-muted">Last updated {legal.updated}</p>
+
+  <LegalSection title="About these terms">
+    <p>
+      This site is run by {legal.operator}, a freelancer based in {legal.country}, under the name {site.name}. {site.name} is not a
+      registered company. In these terms, "we" and "us" mean {legal.operator}. By using the site, you agree to these terms.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="First month free: offer terms" id="first-month-free">
+    <ul class="flex list-disc flex-col gap-3 pl-6">
+      {offer.terms.map((term) => <li>{term}</li>)}
+    </ul>
+  </LegalSection>
+
+  <LegalSection title="Information on this site">
+    <p>
+      The site describes the automations we build. Figures marked with an asterisk, and time savings described as estimates, are
+      illustrative examples and not a promise of results. What your business saves depends on how it works today.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="Live demos">
+    <p>
+      Arav and the CRM demo are there for you to try. They are shared by every visitor, may change or be unavailable at times, and
+      are provided as they are. Please do not enter real personal details in them; see the
+      <a href="/privacy" class="underline underline-offset-2">Privacy Policy</a>.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="Working with us">
+    <p>
+      Any work we do for you is agreed in a written quote. The quote sets out the scope, price, timeline and support, and takes
+      priority over anything on this site.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="Our content">
+    <p>The text, design and demos on this site belong to {legal.operator}. Please do not copy them without permission.</p>
+  </LegalSection>
+
+  <LegalSection title="Limits of our responsibility">
+    <p>
+      We work to keep the site accurate and available, but we cannot guarantee it. As far as the law allows, we are not responsible
+      for any loss caused by using the site or the demos. Links to other services, such as Telegram, are covered by those services'
+      own terms.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="Law">
+    <p>These terms are governed by the laws of {legal.country}.</p>
+  </LegalSection>
+
+  <LegalSection title="Changes and contact">
+    <p>
+      We may update these terms and will change the date at the top when we do. Questions? Email
+      <a href={mailto} class="underline underline-offset-2">{legal.email}</a>.
+    </p>
+  </LegalSection>
 </LegalLayout>

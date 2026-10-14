@@ -1,5 +1,5 @@
 ---
-import { cta, nav, site } from '../data/site';
+import { cta, nav, offer, site } from '../data/site';
 import Icon from './ui/Icon.astro';
 
 interface Props {
@@ -16,6 +16,16 @@ const { overlay = false } = Astro.props;
   data-overlay={overlay ? '' : undefined}
   data-solid={overlay ? undefined : ''}
 >
+  <!-- Offer bar: folds away once the page scrolls so the sticky header stays slim. -->
+  <div class="grid grid-rows-[1fr] bg-lavender text-text transition-[grid-template-rows,visibility] duration-300 group-data-scrolled:invisible group-data-scrolled:grid-rows-[0fr]">
+    <p class="container-x overflow-hidden text-center text-[0.8125rem] leading-snug">
+      <span class="block py-2.5">
+        <span class="sm:hidden">{offer.short}</span>
+        <span class="hidden sm:inline">{offer.long}</span>
+        <a href={offer.termsHref} class="ml-1 whitespace-nowrap underline underline-offset-2 hover:text-ink">T&amp;C apply</a>
+      </span>
+    </p>
+  </div>
   <div class="container-x flex h-[72px] items-center justify-between gap-6 transition-[height] duration-300 lg:h-20 lg:group-data-scrolled:h-16">
     <a href="/" class="font-serif text-[1.625rem] tracking-[-0.03em]" aria-label={`${site.name} home`}>{site.name}</a>
 

@@ -41,7 +41,7 @@ The n8n workflow "WorkDoneAI Contact Form" appends a row to the "WorkDoneAI Lead
 
 | Path | Contents |
 | --- | --- |
-| `src/data/site.ts` | All homepage copy: stats, services, workflows, industries, FAQs |
+| `src/data/site.ts` | All site copy: stats, services, live demos, workflows, founder bio, FAQs |
 | `src/components/sections/` | One component per homepage section |
 | `src/components/ui/ImageSlot.astro` | Photo slot; renders a labelled placeholder until a real image is passed |
 | `src/scripts/` | GSAP animations, smooth scroll, carousels, showcase tabs, contact form |
@@ -50,8 +50,9 @@ The n8n workflow "WorkDoneAI Contact Form" appends a row to the "WorkDoneAI Lead
 ## Before launch
 
 - Replace every figure marked `example: true` or `[X hrs / week]` in `src/data/site.ts` with real client results.
-- Review FAQ answers marked `[REVIEW]`.
+- Keep the timeline, cost and support FAQ answers in line with what we actually offer.
+- Add a founder photo to the About page (`src/pages/about.astro`) and review the founder bio in `src/data/site.ts`.
 - Add real photos: import them and pass `src` to each `ImageSlot`.
-- Add privacy and terms text in `src/pages/privacy.astro` and `src/pages/terms.astro`.
+- Have the draft Privacy Policy and Terms reviewed; operator details live in `legal` in `src/data/site.ts`.
 - Set the four contact form variables from `.env.example` in Vercel, using real Turnstile keys for the `workdoneai.com` hostname.
 - Swap the stand-in heading font (Newsreader) for P22 Mackinac Pro once an Adobe Fonts kit exists: load the kit in `BaseLayout.astro` and change `--font-serif` in `global.css`.

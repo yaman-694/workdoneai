@@ -1,0 +1,14 @@
+---
+/** One titled block on a legal page (privacy, terms). */
+interface Props {
+  title: string;
+  id?: string;
+}
+
+const { title, id } = Astro.props;
+---
+
+<section id={id} class="flex flex-col gap-4 border-t border-line pt-8">
+  <h2 class="text-h3">{title}</h2>
+  <slot />
+</section>

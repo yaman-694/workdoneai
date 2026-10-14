@@ -1,7 +1,89 @@
 ---
+import LegalSection from '../components/ui/LegalSection.astro';
+import { demos, legal, site } from '../data/site';
 import LegalLayout from '../layouts/LegalLayout.astro';
+
+const mailto = `mailto:${legal.email}`;
+const crmDemo = demos[1];
 ---
 
 <LegalLayout title="Privacy Policy">
-  <p>[Privacy policy text to be provided. It should cover what the contact form collects, where submissions are sent, how long they are kept, and how to request deletion.]</p>
+  <p class="text-base text-muted">Last updated {legal.updated}</p>
+
+  <LegalSection title="Who we are">
+    <p>
+      {site.name} is a freelance practice run by {legal.operator}, an individual based in {legal.country}. It is not a registered
+      company. In this policy, "we" and "us" mean {legal.operator}.
+    </p>
+    <p>For any privacy question or request, email <a href={mailto} class="underline underline-offset-2">{legal.email}</a>.</p>
+  </LegalSection>
+
+  <LegalSection title="What we collect">
+    <p><strong class="font-medium">When you send the contact form:</strong></p>
+    <ul class="flex list-disc flex-col gap-2 pl-6">
+      <li>Your name, work email and company name.</li>
+      <li>Your WhatsApp number, if you give it.</li>
+      <li>Your business type, team size, how many enquiries you handle by hand and your preferred call time.</li>
+      <li>Anything you write about how your day runs, and the page you sent the form from.</li>
+    </ul>
+    <p>
+      <strong class="font-medium">When you try Arav, our Telegram demo:</strong> your messages, your Telegram name and username, and
+      any details you share in the chat, such as a phone number, budget or preferred visit time.
+    </p>
+    <p>
+      <strong class="font-medium">When you browse the site:</strong> anonymous page-view and performance statistics, such as the
+      page, referring site, country, browser and device type. These cannot be used to identify you.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="The live demo is public">
+    <p>
+      Arav's leads appear in the <a href={crmDemo.href} class="underline underline-offset-2">{crmDemo.name} CRM demo</a>, which
+      anyone can open. Whatever you tell Arav, including your name and phone number, can be seen by other visitors. Please use
+      made-up details when you try it. To have a demo conversation removed, email us.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="How we use it">
+    <ul class="flex list-disc flex-col gap-2 pl-6">
+      <li>To reply to you, arrange a call and prepare a quote.</li>
+      <li>To run the Arav demo.</li>
+      <li>To understand which pages are useful and keep the site fast.</li>
+    </ul>
+    <p>We do not sell your details, add you to marketing lists or share them with anyone except the services below.</p>
+  </LegalSection>
+
+  <LegalSection title="Services that handle your data">
+    <ul class="flex list-disc flex-col gap-2 pl-6">
+      <li><strong class="font-medium">Vercel</strong> hosts the site and provides the anonymous analytics, without cookies.</li>
+      <li>
+        <strong class="font-medium">Cloudflare Turnstile</strong> checks that the contact form is sent by a person. It receives your
+        IP address and browser details.
+      </li>
+      <li><strong class="font-medium">n8n</strong> is the automation tool that receives form submissions and runs Arav.</li>
+      <li><strong class="font-medium">Google Sheets</strong> is where form submissions are stored.</li>
+      <li><strong class="font-medium">Hostinger</strong> delivers the email that tells us about a new form submission.</li>
+      <li><strong class="font-medium">Telegram</strong> carries your chat with Arav, under Telegram's own privacy policy.</li>
+    </ul>
+    <p>Some of these services store data outside {legal.country}.</p>
+  </LegalSection>
+
+  <LegalSection title="How long we keep it">
+    <p>
+      We keep contact form details for up to 12 months after we last spoke, unless you become a client. Demo conversations may be
+      cleared at any time. You can ask us to delete your details sooner.
+    </p>
+  </LegalSection>
+
+  <LegalSection title="Your choices">
+    <p>
+      You can ask to see, correct or delete the details we hold about you by emailing
+      <a href={mailto} class="underline underline-offset-2">{legal.email}</a>. We will reply within 30 days.
+    </p>
+    <p>The site is meant for businesses and is not aimed at anyone under 18.</p>
+  </LegalSection>
+
+  <LegalSection title="Changes">
+    <p>If we change this policy, we will update it here and change the date at the top.</p>
+  </LegalSection>
 </LegalLayout>

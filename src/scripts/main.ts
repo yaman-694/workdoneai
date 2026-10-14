@@ -1,5 +1,6 @@
 import { initCarousels } from './carousel';
 import { initContactForms } from './contact-form';
+import { initDemoVideos } from './demo-video';
 import { initHeader } from './header';
 import { initMobileCta } from './mobile-cta';
 import { initMobileMenu } from './mobile-menu';
@@ -13,6 +14,7 @@ initMobileMenu();
 initMobileCta();
 initCarousels();
 initContactForms();
+initDemoVideos();
 initAnchorLinks();
 
 if (motionAllowed()) {

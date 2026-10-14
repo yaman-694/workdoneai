@@ -111,6 +111,17 @@
     @apply inline-flex size-12 items-center justify-center rounded-full border border-text transition-colors duration-200 disabled:opacity-30;
   }
 
+  /*
+   * SplitText clips each heading line to animate it in. Glyphs reach past the line box (ascenders
+   * and i-dots above tight display leading, tails like y's at the ends), so grow the clip box up and
+   * sideways, offset by negative margins so nothing moves. The bottom stays put: extra room there
+   * would show the line before it rises.
+   */
+  .split-line-mask {
+    padding: 0.2em 0.2em 0;
+    margin: -0.2em -0.2em 0;
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }

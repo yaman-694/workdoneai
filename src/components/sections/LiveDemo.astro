@@ -1,0 +1,104 @@
+---
+import { demos } from '../../data/site';
+import Icon from '../ui/Icon.astro';
+
+const tryItSteps = ['Message Arav on Telegram', 'Answer its questions like a buyer', 'See your lead land in the CRM'];
+---
+
+<section id="demo" class="scroll-mt-20 bg-plum py-24 text-white lg:py-36" aria-labelledby="demo-title">
+  <div class="container-x flex flex-col gap-12 lg:gap-16">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <h2 id="demo-title" class="text-h1 max-w-[16ch]" data-split>
+        Don't take our word for it. <span class="text-lavender">Try it live.</span>
+      </h2>
+      <ol class="flex flex-col gap-2.5 text-[0.9375rem] text-white/85 lg:max-w-[22rem]" data-reveal>
+        {
+          tryItSteps.map((step, i) => (
+            <li class="flex gap-3">
+              <span class="font-serif text-lavender">{i + 1}.</span>
+              {step}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <figure class="relative overflow-hidden rounded-[4px] border border-white/25 bg-plum" data-demo-video data-reveal>
+      <video
+        class="block aspect-video w-full"
+        poster="/videos/arav-demo-poster.jpg"
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-label="One-minute walkthrough: Arav qualifies a property buyer on Telegram, alerts the sales team and books a site visit"
+      >
+        <source src="/videos/arav-demo.webm" type="video/webm" />
+        <source src="/videos/arav-demo.mp4" type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        class="absolute inset-0 hidden place-items-center bg-plum/30 text-white"
+        data-demo-play
+        aria-label="Play the demo video"
+      >
+        <span class="grid size-20 place-items-center rounded-full bg-lavender text-plum lg:size-24">
+          <Icon name="play" size={32} />
+        </span>
+      </button>
+      <button
+        type="button"
+        class="absolute right-2.5 bottom-2.5 flex items-center gap-2 rounded-[4px] bg-plum/80 p-2 sm:right-4 sm:bottom-4 sm:px-3.5 sm:py-2.5 text-[0.8125rem] text-white backdrop-blur-sm hover:bg-plum lg:right-6 lg:bottom-6"
+        data-demo-sound
+        aria-pressed="false"
+      >
+        <span data-sound-off class="flex items-center gap-2"><Icon name="volume-off" size={18} /><span class="max-sm:sr-only">Play with sound</span></span>
+        <span data-sound-on class="hidden items-center gap-2"><Icon name="volume-on" size={18} /><span class="max-sm:sr-only">Mute</span></span>
+      </button>
+    </figure>
+
+    <ul class="grid gap-5 lg:grid-cols-2" data-reveal-stagger>
+      {
+        demos.map((demo, i) => (
+          <li>
+            <article class="flex h-full flex-col gap-7 rounded-[4px] border border-white/25 p-6 lg:p-10">
+              <div class="flex items-center justify-between gap-4">
+                <p class="eyebrow text-lavender-light">{demo.kind}</p>
+                <p class="flex items-center gap-2 text-[0.8125rem] text-white/85">
+                  <span class="size-2 rounded-full bg-[#7fd18b]" aria-hidden="true"></span>
+                  Live
+                </p>
+              </div>
+              <div class="flex flex-col gap-3">
+                <h3 class="font-serif text-[2.5rem] leading-none tracking-[-0.03em] lg:text-[3.25rem]">{demo.name}</h3>
+                <p class="text-lead max-w-[30rem] text-white/90">{demo.text}</p>
+              </div>
+              <ul class="flex flex-col gap-2.5 border-t border-white/25 pt-6">
+                {demo.features.map((feature) => (
+                  <li class="flex items-start gap-3">
+                    <Icon name="check" size={20} class="mt-0.5 shrink-0 text-lavender" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={demo.href}
+                target="_blank"
+                rel="noopener"
+                class:list={['btn mt-auto self-start', i === 0 ? 'btn-primary' : 'btn-outline-light']}
+              >
+                {demo.action}
+                <Icon name="arrow-up-right" size={18} />
+                <span class="sr-only">(opens in a new tab)</span>
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="-mt-6 text-sm text-white/75 lg:-mt-10">
+      This is a shared demo: anything you tell Arav shows up in the public CRM, so use made-up details.
+      <a href="/privacy" class="underline underline-offset-2 hover:text-white">Privacy Policy</a>
+    </p>
+  </div>
+</section>

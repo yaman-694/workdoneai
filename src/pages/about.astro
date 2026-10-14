@@ -1,0 +1,33 @@
+---
+import Consultation from '../components/sections/Consultation.astro';
+import LiveDemo from '../components/sections/LiveDemo.astro';
+import WhyUs from '../components/sections/WhyUs.astro';
+import { founder } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description={`workdoneai is founded by ${founder.name} and builds AI assistants and automations for real estate businesses.`}
+>
+  <section class="container-x pt-36 pb-24 lg:pt-44 lg:pb-36" aria-labelledby="about-title">
+    <p class="eyebrow" data-reveal>About workdoneai</p>
+    <h1 id="about-title" class="text-display mt-6 max-w-[16ch]" data-split>
+      Less admin for agents. <span class="text-ink">More time with buyers.</span>
+    </h1>
+
+    <div class="mt-16 grid gap-8 border-t border-text pt-8 lg:mt-24 lg:grid-cols-[1fr_2fr] lg:gap-20 lg:pt-12">
+      <div class="flex flex-col gap-2" data-reveal>
+        <h2 class="text-h2">{founder.name}</h2>
+        <p class="eyebrow">{founder.role}</p>
+      </div>
+      <div class="flex max-w-[44rem] flex-col gap-5 text-lead" data-reveal>
+        {founder.bio.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <LiveDemo />
+  <WhyUs />
+  <Consultation />
+</BaseLayout>
